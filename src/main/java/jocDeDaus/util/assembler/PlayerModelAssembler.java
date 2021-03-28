@@ -1,4 +1,4 @@
-package jocDeDaus.util;
+package jocDeDaus.util.assembler;
 
 import jocDeDaus.dto.PlayerDto;
 import org.modelmapper.ModelMapper;
@@ -59,6 +59,7 @@ public class PlayerModelAssembler implements RepresentationModelAssembler<Player
                 linkTo(methodOn(PlayerController.class).one(player.getIdPlayer())).withSelfRel(),
                 linkTo(methodOn(PlayerController.class).newPlayer(player)).withRel("new"),
                 linkTo(methodOn(PlayerController.class).updatePlayer(player, player.getIdPlayer())).withRel("update"),
+                linkTo(methodOn(PlayerController.class).deletePlayer(player.getIdPlayer())).withRel("delete"),
                 linkTo(methodOn(PlayerController.class).allPlayers()).withRel("all"));
     }
 

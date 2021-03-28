@@ -8,9 +8,9 @@ import jocDeDaus.entity.Ranking;
 import jocDeDaus.service.ICrapsRollService;
 import jocDeDaus.service.IGameService;
 import jocDeDaus.service.IPlayerService;
-import jocDeDaus.util.CrapsRollModelAssembler;
+import jocDeDaus.util.assembler.CrapsRollModelAssembler;
 import jocDeDaus.util.IUtilities;
-import jocDeDaus.util.RankingModelAssembler;
+import jocDeDaus.util.assembler.RankingModelAssembler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import jocDeDaus.controller.exception.PlayerNotFoundException;
 import jocDeDaus.entity.Player;
 import jocDeDaus.entity.Game;
-import jocDeDaus.util.PlayerModelAssembler;
+import jocDeDaus.util.assembler.PlayerModelAssembler;
 
 import javax.validation.Valid;
 import java.util.*;
@@ -222,6 +222,48 @@ public class PlayerController{
     }
 
     /**
+     * Representa el mapeo de una peticion HTTP PUT, a la URL http://localhost:8181/employees/{valor numerico}
+     *
+     * Accede a la capa de servicio EmployeeServiceImpl mediante su interface IEmployeeService
+     * y hace uso del metodo 'saveEmployee(employee)' para salvar el objeto modificado o crear uno nuevo,
+     * en caso de que no exista en el sistema un empleado con un id que corresponda al valor numerico
+     * pasado en la URL
+     *
+     *
+     * @param idPlayer, tipo Long anotado con @PathVariable para indicar que es un parametro de metodo
+     *            y debe estar vinculado a una variable de tipo plantilla de URI (URI template)
+     *            Indica el id del empleado a modificar. En caso de que no exista un empleado
+     *            con ese id, crea uno nuevo
+     *
+     * @return objeto generico de tipo ResponseEntity, formado por un objeto de tipo EmployeeDto,
+     * que contiene el empleado modificado (o nuevo), junto con enlaces agregados
+     */
+    @GetMapping("/players/{id}")
+    public ResponseEntity<?> one(@PathVariable(name="id") Long idPlayer) {
+
+        Player player = iPlayerService.findPlayerById(idPlayer)
+                .orElseThrow(() -> new PlayerNotFoundException(idPlayer));
+
+        EntityModel<PlayerDto> playerDto = playerModelAssembler.toModel(player);
+
+        return ResponseEntity
+                .created(playerDto.getRequiredLink(IanaLinkRelations.SELF).toUri())
+                .body(playerDto);
+    }
+
+    @DeleteMapping("/players/{id}")
+    public ResponseEntity<?> deletePlayer(@PathVariable(name="id") Long idPlayer) {
+        // delete one player
+
+        Player player = iPlayerService.findPlayerById(idPlayer)
+                .orElseThrow(() -> new PlayerNotFoundException(idPlayer));
+
+        iPlayerService.deletePlayer(player);
+
+        return ResponseEntity.noContent().build();
+    }
+
+    /**
      * Representa el mapeo de una peticion HTTP GET, a la URL
      * http://localhost:8081/players
      *
@@ -255,35 +297,7 @@ public class PlayerController{
                 .body(collectionModel);
     }
 
-    /**
-     * Representa el mapeo de una peticion HTTP PUT, a la URL http://localhost:8181/employees/{valor numerico}
-     *
-     * Accede a la capa de servicio EmployeeServiceImpl mediante su interface IEmployeeService
-     * y hace uso del metodo 'saveEmployee(employee)' para salvar el objeto modificado o crear uno nuevo,
-     * en caso de que no exista en el sistema un empleado con un id que corresponda al valor numerico
-     * pasado en la URL
-     *
-     *
-     * @param idPlayer, tipo Long anotado con @PathVariable para indicar que es un parametro de metodo
-     *            y debe estar vinculado a una variable de tipo plantilla de URI (URI template)
-     *            Indica el id del empleado a modificar. En caso de que no exista un empleado
-     *            con ese id, crea uno nuevo
-     *
-     * @return objeto generico de tipo ResponseEntity, formado por un objeto de tipo EmployeeDto,
-     * que contiene el empleado modificado (o nuevo), junto con enlaces agregados
-     */
-    @GetMapping("/players/{id}")
-    public ResponseEntity<?> one(@PathVariable(name="id") Long idPlayer) {
 
-        Player player = iPlayerService.findPlayerById(idPlayer)
-                .orElseThrow(() -> new PlayerNotFoundException(idPlayer));
-
-        EntityModel<PlayerDto> playerDto = playerModelAssembler.toModel(player);
-
-        return ResponseEntity
-                .created(playerDto.getRequiredLink(IanaLinkRelations.SELF).toUri())
-                .body(playerDto);
-    }
 
     /**
      * Representa el mapeo de una peticion HTTP POST, a la URL

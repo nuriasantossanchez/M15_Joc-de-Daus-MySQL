@@ -1,15 +1,18 @@
-package jocDeDaus.util;
+package jocDeDaus.util.assembler;
 
-import jocDeDaus.dto.CrapsRollDto;
-import jocDeDaus.entity.CrapsRoll;
+import jocDeDaus.controller.PlayerController;
+import jocDeDaus.dto.GameDto;
+import jocDeDaus.dto.RankingDto;
 import jocDeDaus.entity.Game;
+import jocDeDaus.entity.Player;
+import jocDeDaus.entity.Ranking;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.RepresentationModelAssembler;
 import org.springframework.stereotype.Component;
-import jocDeDaus.controller.PlayerController;
-import jocDeDaus.dto.GameDto;
+
+import java.util.List;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
@@ -39,7 +42,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
  *
  */
 @Component
-public class CrapsRollModelAssembler implements RepresentationModelAssembler<CrapsRoll, EntityModel<CrapsRollDto>> {
+public class RankingModelAssembler implements RepresentationModelAssembler<Ranking, EntityModel<RankingDto>> {
 
     @Autowired
     private ModelMapper modelMapper;
@@ -49,30 +52,30 @@ public class CrapsRollModelAssembler implements RepresentationModelAssembler<Cra
      * Convierte un objeto de tipo Game en un EntityModel de tipos GameDto.
      * El objeto EntityModel envuelve un objeto de dominio y le agrega enlaces
      *
-     * @param crapsRoll, objeto de tipo Game
+     * @param ranking, objeto de tipo Game
      * @return objeto de tipo EntityModel que envuelve a un objeto de tipo GameDto
      * y le agrega enlaces
      */
-    public EntityModel<CrapsRollDto> toModel(CrapsRoll crapsRoll) {
+    public EntityModel<RankingDto> toModel(Ranking ranking) {
 
-        CrapsRollDto crapsRollDto = convertToDto(crapsRoll);
+        RankingDto rankingDto = convertToDto(ranking);
 
-        return EntityModel.of(crapsRollDto,
-                linkTo(methodOn(PlayerController.class).newCrapsRollPlayer(crapsRoll.getIdPlayer())).withSelfRel(),
-                linkTo(methodOn(PlayerController.class).allCrapsRollsByPlayer(crapsRoll.getIdPlayer())).withRel("all"),
-                linkTo(methodOn(PlayerController.class).deleteCrapsRollsByPlayer(crapsRoll.getIdPlayer())).withRel("delete"));
+        return EntityModel.of(rankingDto,
+                        linkTo(methodOn(PlayerController.class).averageSuccessRankingAllPlayers()).withSelfRel(),
+                        linkTo(methodOn(PlayerController.class).playerLoser()).withRel("loser"),
+                        linkTo(methodOn(PlayerController.class).playerWinner()).withRel("winner"));
     }
 
     /**
      * Realizar el mapeo de objetos de tipo Game a objetos de tipo GameDto, haciendo uso de un objeto
      * de tipo ModelMapper qu es injectado en la clase mediante la anotacion @Autowired
      *
-     * @param crapsRoll, objeto de tipo Game
-     * @return objeto de tipo GameDto
+     * @param ranking, objeto de tipo Ranking
+     * @return objeto de tipo RankingDto
      */
-    public CrapsRollDto convertToDto(CrapsRoll crapsRoll) {
-        CrapsRollDto crapsRollDto = modelMapper.map(crapsRoll, CrapsRollDto.class);
-        return crapsRollDto;
+    public RankingDto convertToDto(Ranking ranking) {
+        RankingDto rankingDto = modelMapper.map(ranking, RankingDto.class);
+        return rankingDto;
     }
 
 }

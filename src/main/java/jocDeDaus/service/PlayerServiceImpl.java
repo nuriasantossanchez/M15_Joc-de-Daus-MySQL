@@ -46,4 +46,9 @@ public class PlayerServiceImpl implements IPlayerService {
     public List<Player> listPlayers() {
         return iPlayerRepository.findAll();
     }
+
+    @Override
+    public void deletePlayer(Player player) {
+        iPlayerRepository.delete(player);
+    }
 }

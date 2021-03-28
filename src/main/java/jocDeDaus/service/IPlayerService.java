@@ -18,4 +18,5 @@ public interface IPlayerService {
 
     List<Player> listPlayers(); // list all players
 
+    void deletePlayer(Player player);
 }
