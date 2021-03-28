@@ -11,17 +11,12 @@ import java.util.List;
  *
  * La anotacion @Entity indica que la clase es una entidad.
  *
- * La anotacion @Table indica que la clase sera mapeada a una tabla y persistida, en este caso,
- * tanto en una base de datos embebida de tipo H2, como en una base de datos MySQL.
- * (ver application.properties, donde estan definidas ambas conexiones)
+ * La anotacion @Table indica que la clase sera mapeada a una tabla y persistida
  *
- * La anotacion @OneToMany especifica una asociacion de varios valores con multiplicidad de uno a varios,
- * en este caso, la asociacion es con la entidad Player, donde multiples una unica entidad de tipo Game
- * puede estar asociada a multiples valores de tipo Player.
+ * Entidad que contiene clave primaria compuesta, anotada con @IdClass(GamePlayerPk.class)
  *
- * Al ser la relacion bidireccional, el elemento mappedBy debe usarse para especificar
- * el campo de relacion o la propiedad de la entidad que es propietaria de la relacion.
  */
+
 @Entity
 @Table(name="GAME") //en caso que la tabla sea diferente
 @IdClass(GamePlayerPk.class)

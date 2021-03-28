@@ -1,7 +1,5 @@
 package jocDeDaus.dto;
 
-import jocDeDaus.entity.CrapsRoll;
-import jocDeDaus.entity.Player;
 import org.springframework.stereotype.Component;
 
 /**
@@ -19,6 +17,7 @@ import org.springframework.stereotype.Component;
  * También se pueden considerar otras anotaciones a nivel de clase como identificación de un componente,
  * normalmente un tipo especial de componente: por ejemplo, la anotación @Repository
  */
+
 @Component
 public class GameDto extends ResponseDto{
 

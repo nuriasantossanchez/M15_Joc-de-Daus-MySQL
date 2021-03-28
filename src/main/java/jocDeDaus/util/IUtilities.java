@@ -3,12 +3,13 @@ package jocDeDaus.util;
 import jocDeDaus.entity.CrapsRoll;
 import jocDeDaus.entity.Game;
 import jocDeDaus.entity.Player;
-import org.springframework.stereotype.Component;
-
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * Interface de la capa de Utilidades
+ */
 
 public interface IUtilities {
 

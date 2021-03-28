@@ -1,14 +1,10 @@
 package jocDeDaus.service;
 
 import jocDeDaus.entity.Game;
-import jocDeDaus.entity.Player;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import jocDeDaus.repository.IGameRepository;
-
-import java.math.BigDecimal;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Clase de la capa Service, implementa la interface IGameService
@@ -26,6 +22,7 @@ import java.util.Optional;
  * automaticamente por la funcionalidad de inyeccion de dependencias de Spring
  *
  */
+
 @Service
 public class GameServiceImpl implements IGameService {
 
@@ -40,15 +37,5 @@ public class GameServiceImpl implements IGameService {
     @Override
     public Long countAll() {
         return iGameRepository.count();
-    }
-
-    @Override
-    public Player computeLoserRanking() {
-        return null;
-    }
-
-    @Override
-    public Player computeWinnerRanking() {
-        return null;
     }
 }

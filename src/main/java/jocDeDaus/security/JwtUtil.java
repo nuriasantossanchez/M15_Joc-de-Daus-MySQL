@@ -14,14 +14,16 @@ import java.util.Date;
 
 import static java.util.Collections.emptyList;
 
+/**
+ * Clase de la capa Security
+ *
+ */
+
 public class JwtUtil {
 
     public static final long TOKEN_EXPIRATION_TIME = 86400000; // 1 dia
     private static final String HEADER_AUTHORIZACION_KEY = "Authorization";
     private static final String TOKEN_BEARER_PREFIX = "Bearer ";
-
-    //public static final long TOKEN_EXPIRATION_TIME = 60000; // 1 min
-
 
     // Método para crear el JWT y enviarlo al cliente en el header de la respuesta
     static void addAuthentication(HttpServletResponse res, String username) {

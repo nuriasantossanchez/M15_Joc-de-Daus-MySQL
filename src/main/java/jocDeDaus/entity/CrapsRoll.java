@@ -1,10 +1,20 @@
 package jocDeDaus.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
+
+/**
+ * Clase de la capa de dominio.
+ *
+ * La anotacion @Entity indica que la clase es una entidad.
+ *
+ * La anotacion @Table indica que la clase sera mapeada a una tabla y persistida
+ *
+ */
 
 @Entity
 @Table(name="CRAPSROLL")
-public class CrapsRoll {
+public class CrapsRoll implements Serializable {
 
     @Id
     @Column(name = "ID_CRAPSROLL")

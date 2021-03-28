@@ -1,6 +1,7 @@
 package jocDeDaus.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
@@ -19,6 +20,8 @@ import java.util.Date;
  * Tambien se pueden considerar otras anotaciones a nivel de clase como identificacion de un componente,
  * normalmente un tipo especial de componente: por ejemplo, la anotacion @Repository
  */
+
+@Component
 public class PlayerDto extends ResponseDto{
 
     private Long idPlayer;
