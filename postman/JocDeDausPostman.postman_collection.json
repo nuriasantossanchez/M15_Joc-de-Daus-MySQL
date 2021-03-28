@@ -6,7 +6,7 @@
 	},
 	"item": [
 		{
-			"name": "GET Security Authentication",
+			"name": "GET Security Authentication ADMIN",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -15,7 +15,37 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": " {\r\n    \"name\":\"root\",\r\n    \"password\":\"root\"\r\n}",
+					"raw": " {\r\n    \"name\":\"root\",\r\n    \"password\":\"r@@t\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8081/login",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Security Authentication USER",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " {\r\n    \"name\":\"user\",\r\n    \"password\":\"secret@\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
